@@ -1,0 +1,12 @@
+{
+ "Site": "S01 \u00b7 A28 \u00b7 Harderwijk;Nunspeet (Gelderland)",
+ "Fires": "8 in 1 year(s)",
+ "Centroid": "52.35271, 5.73684",
+ "KNMI stations (nearest)": "269 Lelystad Airport (19 km); 275 Deelen Airport (34 km); 278 Heino (37 km); 258 Houtribdijk (40 km)",
+ "KNMI stations used (days)": "269: 143343",
+ "Satellite footprint": "BGT green verge within 50 m of the fires, 16,512 m\u00b2",
+ "BGT vegetation within 100 m": "gemengd bos 34%, berm (green verge) 18%, naaldbos 9%, grasland overig 8%, struiken 5%, loofbos 1%, groenvoorziening 0%",
+ "BGT vegetation within 500 m": "gemengd bos 33%, heide 13%, naaldbos 8%, loofbos 5%, berm (green verge) 4%, grasland overig 4%, bouwland 3%, grasland agrarisch 1%, struiken 1%",
+ "Distance to nearest (m, OSM)": "railway 115, campsite 284, picnic_site 595, parking 197, rest_area 1369, residential 113",
+ "Sentinel-2 clear scenes": "245 (2017-03-27 \u2192 2026-09-18)"
+}

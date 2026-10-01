@@ -1,0 +1,7 @@
+pandas>=2.0
+numpy>=1.24
+# go.Scattermap (the non-deprecated map trace) arrived in plotly 5.24
+plotly>=5.24
+# st.segmented_control, on_select for charts and dataframes, width="stretch"
+streamlit>=1.40
+pyarrow>=14

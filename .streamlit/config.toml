@@ -1,0 +1,14 @@
+# Light theme, like the WUNDER viewer: the figures are built for a white ground.
+[theme]
+base = "light"
+primaryColor = "#2a78d6"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f7f7f5"
+textColor = "#1a1a1a"
+font = "serif"
+
+[browser]
+gatherUsageStats = false
+
+[server]
+headless = true

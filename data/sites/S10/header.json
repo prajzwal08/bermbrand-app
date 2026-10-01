@@ -1,0 +1,12 @@
+{
+ "Site": "S10 \u00b7 A58 \u00b7 Breda (Noord-Brabant)",
+ "Fires": "3 in 2 year(s)",
+ "Centroid": "51.53874, 4.80208",
+ "KNMI stations (nearest)": "350 Gilze-Rijen Airport (10 km); 340 Woensdrecht Airport (33 km); 370 Eindhoven Airport (41 km); 331 Tholen (43 km)",
+ "KNMI stations used (days)": "350: 143568",
+ "Satellite footprint": "BGT green verge within 50 m of the fires, 5,869 m\u00b2",
+ "BGT vegetation within 100 m": "berm (green verge) 26%, grasland overig 21%, groenvoorziening 10%, grasland agrarisch 5%, struiken 4%, loofbos 2%, bouwland 2%, houtwal 1%, gemengd bos 1%",
+ "BGT vegetation within 500 m": "grasland agrarisch 30%, grasland overig 12%, berm (green verge) 9%, groenvoorziening 8%, bouwland 8%, loofbos 1%, houtwal 1%, struiken 1%, naaldbos 1%, gemengd bos 1%",
+ "Distance to nearest (m, OSM)": "railway 3952, campsite 363, picnic_site 1040, parking 357, rest_area 2374, residential 475",
+ "Sentinel-2 clear scenes": "297 (2017-02-15 \u2192 2026-09-25)"
+}

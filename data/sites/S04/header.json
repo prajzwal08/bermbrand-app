@@ -1,0 +1,12 @@
+{
+ "Site": "S04 \u00b7 A15 \u00b7 Ridderkerk (Zuid-Holland)",
+ "Fires": "5 in 2 year(s)",
+ "Centroid": "51.85661, 4.60225",
+ "KNMI stations (nearest)": "344 Rotterdam Airport (16 km); 343 Rotterdam Geulhaven (20 km); 348 Cabauw (26 km); 215 Voorschoten (34 km)",
+ "KNMI stations used (days)": "344: 143609, 343: 15",
+ "Satellite footprint": "BGT green verge within 50 m of the fires, 10,412 m\u00b2",
+ "BGT vegetation within 100 m": "berm (green verge) 21%, struiken 17%, grasland overig 8%, grasland agrarisch 7%, groenvoorziening 5%",
+ "BGT vegetation within 500 m": "groenvoorziening 16%, bouwland 12%, grasland agrarisch 9%, berm (green verge) 8%, struiken 4%, grasland overig 3%",
+ "Distance to nearest (m, OSM)": "railway 2102, campsite 3998, picnic_site 231, parking 298, rest_area 1479, residential 540",
+ "Sentinel-2 clear scenes": "138 (2017-05-06 \u2192 2026-09-06)"
+}

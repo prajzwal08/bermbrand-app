@@ -1,0 +1,12 @@
+{
+ "Site": "S06 \u00b7 A12 \u00b7 Lansingerland;Zuidplas (Zuid-Holland)",
+ "Fires": "4 in 2 year(s)",
+ "Centroid": "52.02196, 4.59783",
+ "KNMI stations (nearest)": "344 Rotterdam Airport (12 km); 215 Voorschoten (17 km); 210 VALKENBURG VK (20 km); 348 Cabauw (23 km)",
+ "KNMI stations used (days)": "344: 143609, 210: 17",
+ "Satellite footprint": "BGT green verge within 50 m of the fires, 4,215 m\u00b2",
+ "BGT vegetation within 100 m": "grasland overig 28%, berm (green verge) 12%, bouwland 10%, grasland agrarisch 8%",
+ "BGT vegetation within 500 m": "bouwland 22%, grasland overig 9%, berm (green verge) 4%, grasland agrarisch 3%, groenvoorziening 1%, fruitteelt 1%",
+ "Distance to nearest (m, OSM)": "railway 145, campsite 2438, picnic_site 2070, parking 353, rest_area >5000, residential 603",
+ "Sentinel-2 clear scenes": "133 (2017-03-27 \u2192 2026-08-12)"
+}

@@ -1,0 +1,12 @@
+{
+ "Site": "S05 \u00b7 A16 \u00b7 Dordrecht (Zuid-Holland)",
+ "Fires": "5 in 1 year(s)",
+ "Centroid": "51.74470, 4.63834",
+ "KNMI stations (nearest)": "344 Rotterdam Airport (28 km); 343 Rotterdam Geulhaven (28 km); 350 Gilze-Rijen Airport (29 km); 348 Cabauw (32 km)",
+ "KNMI stations used (days)": "344: 143609",
+ "Satellite footprint": "BGT green verge within 50 m of the fires, 10,544 m\u00b2",
+ "BGT vegetation within 100 m": "berm (green verge) 18%, bouwland 16%, grasland overig 12%, groenvoorziening 4%, struiken 1%, loofbos 1%",
+ "BGT vegetation within 500 m": "bouwland 41%, grasland overig 9%, groenvoorziening 5%, grasland agrarisch 4%, berm (green verge) 4%, loofbos 2%, struiken 0%",
+ "Distance to nearest (m, OSM)": "railway 269, campsite 1814, picnic_site 1185, parking 260, rest_area 256, residential 967",
+ "Sentinel-2 clear scenes": "300 (2017-03-24 \u2192 2026-09-25)"
+}

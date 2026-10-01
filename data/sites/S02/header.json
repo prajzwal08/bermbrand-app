@@ -1,0 +1,12 @@
+{
+ "Site": "S02 \u00b7 A15 \u00b7 Hoogvliet;Rotterdam (Zuid-Holland)",
+ "Fires": "6 in 3 year(s)",
+ "Centroid": "51.87351, 4.39111",
+ "KNMI stations (nearest)": "343 Rotterdam Geulhaven (6 km); 344 Rotterdam Airport (11 km); 330 Hoek van Holland (23 km); 215 Voorschoten (30 km)",
+ "KNMI stations used (days)": "344: 143609, 343: 15, 330: 1",
+ "Satellite footprint": "BGT green verge within 50 m of the fires, 11,406 m\u00b2",
+ "BGT vegetation within 100 m": "berm (green verge) 26%, grasland overig 7%, groenvoorziening 4%, grasland agrarisch 2%",
+ "BGT vegetation within 500 m": "groenvoorziening 13%, grasland overig 11%, loofbos 10%, berm (green verge) 9%, grasland agrarisch 4%, struiken 1%",
+ "Distance to nearest (m, OSM)": "railway 174, campsite 3488, picnic_site 2691, parking 152, rest_area 1223, residential 957",
+ "Sentinel-2 clear scenes": "113 (2017-03-27 \u2192 2026-08-27)"
+}

@@ -1,0 +1,12 @@
+{
+ "Site": "S09 \u00b7 A58 \u00b7 Tilburg (Noord-Brabant)",
+ "Fires": "3 in 3 year(s)",
+ "Centroid": "51.53858, 5.05728",
+ "KNMI stations (nearest)": "350 Gilze-Rijen Airport (9 km); 370 Eindhoven Airport (24 km); 356 Herwijnen (36 km); 375 Volkel (47 km)",
+ "KNMI stations used (days)": "350: 143568, 370: 57",
+ "Satellite footprint": "BGT green verge within 50 m of the fires, 5,345 m\u00b2",
+ "BGT vegetation within 100 m": "groenvoorziening 15%, berm (green verge) 14%, gemengd bos 7%, grasland overig 3%, struiken 2%",
+ "BGT vegetation within 500 m": "groenvoorziening 22%, berm (green verge) 4%, gemengd bos 3%, grasland overig 2%, loofbos 1%",
+ "Distance to nearest (m, OSM)": "railway 2727, campsite 2470, picnic_site 3203, parking 101, rest_area 2998, residential 250",
+ "Sentinel-2 clear scenes": "242 (2017-03-27 \u2192 2026-09-25)"
+}

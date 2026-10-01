@@ -1,0 +1,12 @@
+{
+ "Site": "S07 \u00b7 A4 \u00b7 Moerdijk;Steenbergen (Noord-Brabant)",
+ "Fires": "3 in 3 year(s)",
+ "Centroid": "51.63552, 4.38941",
+ "KNMI stations (nearest)": "340 Woensdrecht Airport (21 km); 331 Tholen (22 km); 324 Stavenisse (27 km); 343 Rotterdam Geulhaven (29 km)",
+ "KNMI stations used (days)": "340: 106952, 344: 13055, 331: 5285",
+ "Satellite footprint": "BGT green verge within 50 m of the fires, 6,198 m\u00b2",
+ "BGT vegetation within 100 m": "bouwland 25%, grasland overig 21%, berm (green verge) 15%, grasland agrarisch 3%",
+ "BGT vegetation within 500 m": "bouwland 35%, grasland overig 10%, berm (green verge) 4%, grasland agrarisch 3%, groenvoorziening 2%, fruitteelt 1%",
+ "Distance to nearest (m, OSM)": "railway >5000, campsite 1759, picnic_site 4181, parking 458, rest_area >5000, residential 651",
+ "Sentinel-2 clear scenes": "126 (2017-03-27 \u2192 2026-09-06)"
+}

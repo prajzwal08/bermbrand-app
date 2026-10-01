@@ -1,0 +1,12 @@
+{
+ "Site": "S08 \u00b7 A4 \u00b7 Steenbergen (Noord-Brabant)",
+ "Fires": "3 in 3 year(s)",
+ "Centroid": "51.55888, 4.29087",
+ "KNMI stations (nearest)": "331 Tholen (11 km); 340 Woensdrecht Airport (13 km); 324 Stavenisse (20 km); 315 Hansweert (24 km)",
+ "KNMI stations used (days)": "340: 106952, 323: 11608, 331: 5285",
+ "Satellite footprint": "BGT green verge within 50 m of the fires, 5,769 m\u00b2",
+ "BGT vegetation within 100 m": "bouwland 24%, berm (green verge) 13%, groenvoorziening 12%, grasland overig 11%, grasland agrarisch 2%, gemengd bos 1%",
+ "BGT vegetation within 500 m": "grasland agrarisch 21%, bouwland 20%, grasland overig 6%, berm (green verge) 3%, gemengd bos 3%, groenvoorziening 2%, loofbos 2%",
+ "Distance to nearest (m, OSM)": "railway >5000, campsite 1464, picnic_site >5000, parking 703, rest_area >5000, residential 208",
+ "Sentinel-2 clear scenes": "136 (2017-03-27 \u2192 2026-09-06)"
+}

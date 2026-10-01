@@ -1,0 +1,12 @@
+{
+ "Site": "S03 \u00b7 A4 \u00b7 Haarlemmermeer (Noord-Holland)",
+ "Fires": "6 in 1 year(s)",
+ "Centroid": "52.22409, 4.63488",
+ "KNMI stations (nearest)": "240 Schiphol Airport (15 km); 210 VALKENBURG VK (15 km); 215 Voorschoten (16 km); 225 IJmuiden (27 km)",
+ "KNMI stations used (days)": "240: 143622, 210: 4",
+ "Satellite footprint": "BGT green verge within 50 m of the fires, 10,448 m\u00b2",
+ "BGT vegetation within 100 m": "bouwland 28%, berm (green verge) 16%, grasland overig 16%, grasland agrarisch 1%",
+ "BGT vegetation within 500 m": "bouwland 59%, grasland agrarisch 9%, berm (green verge) 4%, groenvoorziening 4%, grasland overig 4%",
+ "Distance to nearest (m, OSM)": "railway 427, campsite 916, picnic_site 1095, parking 873, rest_area 2597, residential 501",
+ "Sentinel-2 clear scenes": "155 (2017-03-27 \u2192 2026-08-12)"
+}
