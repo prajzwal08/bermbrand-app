@@ -67,6 +67,17 @@ def load_site(site_id):
             json.loads((d / "header.json").read_text()))
 
 
+@st.cache_data
+def load_fire_risk(site_ids):
+    """Per past fire: vulnerability at its cell (default weights) x FWI percentile on its day (scripts/export_vulnerability_map.py)."""
+    rows = []
+    for sid in site_ids:
+        f = DATA / "sites" / sid / "fire_risk.json"
+        if f.exists():
+            rows += [dict(r, site=sid) for r in json.loads(f.read_text())]
+    return pd.DataFrame(rows, columns=["site", "id", "start", "minutes", "vulnerability", "fwi", "fwi_pct", "risk"])
+
+
 def series(ser, var):
     return ser[ser.variable == var].sort_values("date")
 
@@ -207,7 +218,7 @@ m[2].metric("Green verge analysed", (fp.split(", ")[-1] if "m²" in fp else "–
 stn = (HEADER.get("KNMI stations (nearest)", "").split(";") or ["–"])[0].strip()
 m[3].metric("KNMI station", stn.split(" ", 1)[-1] if stn else "–", "for temperature", delta_color="off")
 
-tabs = st.tabs(["Summary", "Verge map", "Fuel & radar by radius", "Before fires (90 d)", "Fire year", "Weather", "Fire weather",
+tabs = st.tabs(["Summary", "Verge map", "Vulnerability map", "Fuel & radar by radius", "Before fires (90 d)", "Fire year", "Weather", "Fire weather",
                 "Dryness", "Fuel", "Radar", "All sites", "Method & QC"])
 
 
@@ -239,9 +250,19 @@ with tabs[0]:
     left, right = st.columns([0.8, 1.3], gap="large")
     with left:
         st.subheader("Where")
-        fig = go.Figure(go.Scattermap(lat=sites.lat, lon=sites.lon, mode="markers+text", text=sites.index, textposition="middle right",
-                                      marker=dict(size=8 + 3 * sites.n_fires, color=[("#2a78d6" if i == site_id else FIRE) for i in sites.index], opacity=0.8),
-                                      customdata=sites.index, hovertemplate="%{customdata}<extra></extra>"))
+        fr = load_fire_risk(tuple(sites.index))
+        risk = fr.groupby("site").risk.mean().reindex(sites.index)
+        hover = [f"<b>{i}</b> · mean fire-day risk {risk[i]:.2f}<br>" + "<br>".join(
+                     f"{r.start[:16].replace('T', ' ')} · risk {r.risk:.2f} (vuln. {r.vulnerability:.2f} × FWI pct {r.fwi_pct})"
+                     for r in fr[fr.site == i].itertuples()) if i in risk.dropna().index else i for i in sites.index]
+        fig = go.Figure([
+            go.Scattermap(lat=[sites.lat[site_id]], lon=[sites.lon[site_id]], mode="markers", hoverinfo="skip", showlegend=False,
+                          marker=dict(size=14 + 3 * sites.n_fires[site_id], color="#2a78d6", opacity=0.9)),
+            go.Scattermap(lat=sites.lat, lon=sites.lon, mode="markers+text", text=sites.index, textposition="middle right",
+                          marker=dict(size=8 + 3 * sites.n_fires, color=risk.fillna(0), colorscale=[[0, "#fcbba1"], [0.5, "#ef3b2c"], [1, "#67000d"]], cmin=0,
+                                      cmax=max(float(risk.max()), 0.05) if risk.notna().any() else 1, opacity=0.95,
+                                      colorbar=dict(title=dict(text="fire-day<br>risk", font=dict(size=11)), thickness=12, len=0.6, x=0.98)),
+                          customdata=sites.index, hovertext=hover, hovertemplate="%{hovertext}<extra></extra>", showlegend=False)])
         fig.update_layout(map=dict(style="open-street-map", center=dict(lat=52.1, lon=5.1), zoom=6.2), height=520,
                           margin=dict(l=0, r=0, t=0, b=0), font=FONT)
         ev = st.plotly_chart(fig, width="stretch", on_select="rerun", selection_mode="points", key="overview")
@@ -251,7 +272,9 @@ with tabs[0]:
             if new and new != site_id:
                 st.session_state.site = new
                 st.rerun()
-        st.caption("Dot size = number of fires. Click a dot to switch location.")
+        st.caption("Dot size = number of fires. Colour = mean risk on the fire days: vulnerability at each fire's cell (default "
+                   "weights of the Vulnerability map) × that day's FWI percentile for the date. Darker red = the fire happened where and "
+                   "when the map rates risk higher. Blue ring = selected site. Click a dot to switch location.")
     with right:
         st.subheader("Conditions on each fire day")
         st.caption("Coloured by where each value sits in the climatology for that time of year, turned so that red always means more fire-prone.")
@@ -374,6 +397,43 @@ with tabs[1]:
     st.iframe("<!doctype html><html><body style='margin:0'>" + verge_map_html(MAP) + "</body></html>", height=640)
 
 
+# ------------------------------------------------------------------ Vulnerability map
+
+@st.cache_data
+def load_nearest():
+    rows = []
+    for sid in sites.index:
+        f = DATA / "sites" / sid / "nearest.json"
+        if not f.exists():
+            continue
+        n = json.loads(f.read_text())
+        rt, fs = n.get("station_route") or {}, n.get("fire_station") or {}
+        km = lambda o: round(o["m"] / 1000, 2) if o else None  # noqa: E731
+        rows.append({"site": sid, "quickest station": rt.get("name"), "drive min": round(rt["minutes"], 1) if rt else None,
+                     "road km": round(rt["km"], 1) if rt else None, "closest station (line)": fs.get("name"),
+                     "line km": km(fs), "campsite km": km(n.get("campsite")), "parking km": km(n.get("parking")),
+                     "rest area km": km(n.get("rest_area"))})
+    return pd.DataFrame(rows)
+
+
+with tabs[2]:
+    vpage = DATA / "sites" / site_id / "vulnerability.html"
+    st.subheader(f"Where could a fire start and spread at {site_id}?")
+    st.caption("Vulnerability = fuel (land-cover % × flammability) × soil drying × ignition (road, traffic, people), lowered by "
+               "suppression (water, fire station). Every weight is a slider: set what you think is more or less vulnerable and the map "
+               "recolours. Pick a day and hour below the map to see risk under that day's fire weather. Black dots = past fires (size = duration); "
+               "the red F and red dashed line = the fire station with the quickest road route.")
+    if vpage.exists():
+        st.iframe(vpage.read_text(), height=900)
+    else:
+        st.info("No vulnerability map for this site yet (scripts/export_vulnerability_map.py).")
+    near = load_nearest()
+    if len(near):
+        st.markdown("**Nearest facilities, all sites** <span class='caption'>from the closest past fire; drive time at normal car speeds "
+                    "(OSRM), indicative for a fire engine; OSM coverage of stations and campsites is incomplete</span>", unsafe_allow_html=True)
+        st.dataframe(near, hide_index=True, width="stretch")
+
+
 # ------------------------------------------------------------------ Fuel & radar by radius
 
 def buf_series(sensor, idx, r, g):
@@ -402,7 +462,7 @@ def buf_traces(sensor, idx, r, g, colour, with_band):
     return tr
 
 
-with tabs[2]:
+with tabs[3]:
     compare = st.toggle("Compare radii (50 m, 500 m, 1 km)", value=False)
     st.caption(f"Averages over BGT-labelled {GROUPS[group].lower()} pixels (≥ 70 % one class; road, water, buildings, paved excluded). "
                "Sentinel-2: mean reflectance, then the index. Sentinel-1: mean of linear VV and VH, then dB and ratios; one line per orbit. "
@@ -430,7 +490,7 @@ with tabs[2]:
 
 # ------------------------------------------------------------------ Before fires (90 d)
 
-with tabs[3]:
+with tabs[4]:
     set_ = PF["sets"].get(f"{radius}|{group}", {})
     allr = {**PF["weather"], **set_}
     names = {**PF["labels"], **{f"s2|{k}": "S2 " + l for k, l in BUF_S2}, **{f"s1|{k}": "S1 " + l for k, l in BUF_S1}}
@@ -519,7 +579,7 @@ FY = [("Max temperature (°C)", "knmi_tmax_c", "line", 1, True), ("Min relative 
       ("S2 NDMI (fuel water)", "s2_ndmi", "obs", 2, False), ("S2 MSI (moisture stress)", "s2_msi", "obs", 2, True),
       ("S2 NDTI (dry / dead matter)", "s2_ndti", "obs", 3, True), ("S1 cross-ratio VH − VV (dB)", "s1_cr_db", "obs", 1, False)]
 
-with tabs[4]:
+with tabs[5]:
     fsel = st.segmented_control("Fire", [f"{t:%Y-%m-%d %H:%M}" for t in fires], default=f"{fires[-1]:%Y-%m-%d %H:%M}")
     fday = pd.Timestamp(fsel or f"{fires[-1]:%Y-%m-%d %H:%M}").normalize()
     y0 = pd.Timestamp(year=fday.year, month=1, day=1)
@@ -577,7 +637,7 @@ with tabs[4]:
 
 # ------------------------------------------------------------------ time-series tabs (from panels.json)
 
-for tab_i, grp in zip(range(5, 10), ["C spread", "B/C fire weather", "B dryness", "A fuel", "A/B radar"]):
+for tab_i, grp in zip(range(6, 11), ["C spread", "B/C fire weather", "B dryness", "A fuel", "A/B radar"]):
     with tabs[tab_i]:
         st.caption("Red lines are fire starts. Grey band: 10th–90th percentile of the ±15-day climatology (KNMI 1991–2020; satellites all years); "
                    "dotted: median. Satellite points are single cloud-screened images; hollow markers are flagged outliers. Use Values and Period in the sidebar.")
@@ -591,7 +651,7 @@ for tab_i, grp in zip(range(5, 10), ["C spread", "B/C fire weather", "B dryness"
 
 # ------------------------------------------------------------------ All sites
 
-with tabs[10]:
+with tabs[11]:
     st.subheader("All ten sites")
     st.caption("Incidents within 1 km are grouped into one site (DBSCAN on the RWS bermbrand points) and ranked by number of fires. Select a row to open it.")
     t = sites.reset_index()[["site_id", "routes", "gemeente", "provincie", "n_fires", "n_years"]].copy()
@@ -605,7 +665,7 @@ with tabs[10]:
 
 # ------------------------------------------------------------------ Method & QC
 
-with tabs[11]:
+with tabs[12]:
     st.subheader(f"Sources for {site_id}")
     st.dataframe(pd.DataFrame([(k, v) for k, v in HEADER.items() if not k.startswith("BGT vegetation") and k != "Site"],
                               columns=["Item", "Value"]), hide_index=True, width="stretch")
